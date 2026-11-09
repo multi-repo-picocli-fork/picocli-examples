@@ -10,10 +10,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          path: picocli-examples
+      # Sibling Gradle builds included by settings.gradle. PICOCLI_READ_TOKEN needs
+      # read access to their private repositories.
+      - uses: actions/checkout@v4
+        with:
+          repository: multi-repo-picocli-fork/picocli-core
+          path: picocli-core
+          token: ${{ secrets.PICOCLI_READ_TOKEN }}
+      - uses: actions/checkout@v4
+        with:
+          repository: multi-repo-picocli-fork/picocli-groovy
+          path: picocli-groovy
+          token: ${{ secrets.PICOCLI_READ_TOKEN }}
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '17'
           cache: gradle
       - name: Build and test
+        working-directory: picocli-examples
         run: ./gradlew clean build --no-daemon
