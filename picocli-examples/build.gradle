@@ -24,8 +24,8 @@ configurations {
     ivy
 }
 dependencies {
-    api rootProject
-    api project(':picocli-groovy')
+    api "info.picocli:picocli:$projectVersion"
+    api "info.picocli:picocli-groovy:$projectVersion"
     api supportDependencies.kotlin_stdlib
     api supportDependencies.scala_lang
     ivy             supportDependencies.ivy // for Intelli/J
